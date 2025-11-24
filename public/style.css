@@ -105,14 +105,15 @@ button[type="submit"]:hover {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  position: relative;
 }
 
 /* Footer layout */
 .note-footer {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 12px;
+  align-items: flex-end;
+  margin-top: 8px;
   font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
@@ -124,7 +125,6 @@ button[type="submit"]:hover {
   font-size: 0.85em;
   color: #6b7280;
   font-weight: 500;
-  padding-top: 4px;
 }
 
 .note-footer .actions {
