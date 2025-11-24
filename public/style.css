@@ -28,7 +28,6 @@ body {
   text-align: center;        /* ✅ center text inside */
 }
 
-
 h1 {
   margin-bottom: 16px;
 }
@@ -77,4 +76,29 @@ input, textarea {
   display: grid;
   gap: 16px;
   text-align: center;        /* ✅ notes centered */
+}
+
+/* 🔥 Extra code for consistency across all pages */
+
+/* Ensure background applies everywhere */
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Optional overlay for readability */
+.overlay {
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* Notes styling enhancement */
+.notes li {
+  background: #f9fafb;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
