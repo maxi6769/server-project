@@ -111,38 +111,35 @@ button[type="submit"]:hover {
 /* Footer layout */
 .note-footer {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-top: 8px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  margin-top: 12px;
   font-family: 'Inter', 'Segoe UI', sans-serif;
-}
-
-.note-footer .timestamp {
-  flex: 1;
-}
-
-.note-footer .timestamp small {
-  font-size: 0.85em;
-  color: #6b7280;
-  font-weight: 500;
 }
 
 .note-footer .actions {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.note-footer .actions button,
+.note-footer .actions a {
+  flex: 1;
+  padding: 10px 16px;
+  font-size: 0.95em;
+  border-radius: 6px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
 .note-footer .actions button {
-  padding: 10px 16px;
-  font-size: 0.95em;
   background-color: #3b82f6;
   color: white;
   border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
 }
 
 .note-footer .actions button:hover {
@@ -150,16 +147,18 @@ button[type="submit"]:hover {
 }
 
 .note-footer .actions a {
-  padding: 8px 14px;
-  font-size: 0.85em;
   background-color: #ef4444;
   color: white;
-  border-radius: 6px;
   text-decoration: none;
-  font-weight: 500;
-  text-align: center;
 }
 
 .note-footer .actions a:hover {
   background-color: #dc2626;
+}
+
+.note-footer .timestamp small {
+  font-size: 0.85em;
+  color: #6b7280;
+  font-weight: 500;
+  text-align: left;
 }
