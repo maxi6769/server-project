@@ -26,10 +26,10 @@
           <% notes.forEach(function(note) { %>
             <li>
               <form method="POST" action="/notes/edit/<%= note._id %>">
-                <textarea name="noteContent" oninput="this.nextElementSibling.style.display='flex'"><%= note.noteContent %></textarea>
+                <textarea name="noteContent" onfocus="this.nextElementSibling.style.display='flex'"><%= note.noteContent %></textarea>
 
                 <!-- Footer layout -->
-                <div class="note-footer" style="display: none;">
+                <div class="note-footer">
                   <div class="timestamp">
                     <small>
                       Last modified:
@@ -38,7 +38,7 @@
                            : "N/A" %>
                     </small>
                   </div>
-                  <div class="actions">
+                  <div class="actions" style="display: none;">
                     <button type="submit">Save</button>
                     <a href="/notes/delete/<%= note._id %>">Delete</a>
                   </div>
@@ -54,7 +54,6 @@
     </div>
   </div>
 
-  <!-- Optional dynamic background override -->
   <script>
     fetch('/background')
       .then(res => res.json())
