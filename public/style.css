@@ -1,4 +1,3 @@
-/* Full-page centering */
 html, body {
   height: 100%;
   margin: 0;
@@ -9,6 +8,9 @@ html, body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .page-wrapper {
@@ -18,7 +20,6 @@ html, body {
   justify-content: center;
 }
 
-/* White box container */
 .container {
   background: #fff;
   width: 600px;
@@ -26,16 +27,15 @@ html, body {
   padding: 40px;
   border-radius: 12px;
   box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  text-align: center;
 }
 
-/* Optional overlay for readability */
 .overlay {
   background-color: rgba(255, 255, 255, 0.85);
   border-radius: 12px;
   padding: 20px;
 }
 
-/* Topbar layout */
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -54,7 +54,6 @@ html, body {
   font-weight: 500;
 }
 
-/* Form styling */
 form {
   display: grid;
   gap: 16px;
@@ -75,7 +74,6 @@ textarea[name="noteContent"] {
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
 }
 
-/* Add note button */
 button[type="submit"] {
   padding: 12px 18px;
   font-size: 1em;
@@ -90,7 +88,6 @@ button[type="submit"]:hover {
   background-color: #2563eb;
 }
 
-/* Notes list */
 .notes {
   list-style: none;
   padding: 0;
@@ -99,7 +96,6 @@ button[type="submit"]:hover {
   gap: 20px;
 }
 
-/* Note card */
 .notes li {
   background: #f9fafb;
   padding: 20px;
@@ -114,11 +110,11 @@ button[type="submit"]:hover {
 .note-footer {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   margin-top: 8px;
 }
 
-.note-footer small {
+.note-footer .timestamp small {
   font-size: 0.85em;
   color: #888;
 }
@@ -130,7 +126,6 @@ button[type="submit"]:hover {
   gap: 8px;
 }
 
-/* Save button */
 .note-footer .actions button {
   padding: 12px 18px;
   font-size: 1em;
@@ -145,7 +140,6 @@ button[type="submit"]:hover {
   background-color: #2563eb;
 }
 
-/* Delete button */
 .note-footer .actions a {
   padding: 10px 16px;
   font-size: 0.9em;
