@@ -29,6 +29,10 @@
                 <textarea name="noteContent" onfocus="showActions(this)"><%= note.noteContent %></textarea>
 
                 <div class="note-footer">
+                  <div class="actions" style="display: none;">
+                    <button type="submit">Save</button>
+                    <a href="/notes/delete/<%= note._id %>">Delete</a>
+                  </div>
                   <div class="timestamp">
                     <small>
                       Last modified:
@@ -36,10 +40,6 @@
                            ? new Date(note.noteLastModified).toLocaleString("en-HK", { timeZone: "Asia/Hong_Kong" }) 
                            : "N/A" %>
                     </small>
-                  </div>
-                  <div class="actions" style="display: none;">
-                    <button type="submit">Save</button>
-                    <a href="/notes/delete/<%= note._id %>">Delete</a>
                   </div>
                 </div>
               </form>
@@ -53,7 +53,7 @@
     </div>
   </div>
 
-  <!-- Background override -->
+  <!-- Background override and button toggle -->
   <script>
     fetch('/background')
       .then(res => res.json())
@@ -64,7 +64,6 @@
       })
       .catch(err => console.error("Background fetch failed:", err));
 
-    // Show Save/Delete on focus
     function showActions(textarea) {
       const footer = textarea.nextElementSibling;
       const actions = footer?.querySelector('.actions');
