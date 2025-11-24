@@ -1,103 +1,147 @@
-body {
-  background-image: url('/images/background.jpeg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  font-family: 'Inter', 'Segoe UI', sans-serif;
-  color: #2e2e2e;
-  margin: 0;
-}
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body {
+      background-image: url('/images/background.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      color: #333;
+    }
 
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  font-size: 1.1em;
-  font-weight: 500;
-}
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
 
-.topbar a {
-  text-decoration: none;
-  color: #3b82f6;
-  font-weight: 500;
-}
+    .topbar p {
+      font-size: 1.2em;
+      font-weight: 600;
+    }
 
-textarea[name="noteContent"] {
-  resize: none;
-  overflow-y: auto;
-  min-height: 80px;
-  max-height: 200px;
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #d9dee7;
-  border-radius: 8px;
-  font-size: 1em;
-  line-height: 1.4;
-  background-color: #fff;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
-}
+    .topbar a {
+      text-decoration: none;
+      color: #3b82f6;
+      font-weight: 500;
+    }
 
-.notes {
-  list-style: none;
-  padding: 0;
-  margin: 20px 0;
-  display: grid;
-  gap: 20px;
-}
+    .note-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 8px;
+    }
 
-.notes li {
-  background: #f9fafb;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+    .note-footer small {
+      font-size: 0.85em;
+      color: #666;
+    }
 
-.note-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
+    .note-footer .actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
 
-.note-footer small {
-  font-size: 0.85em;
-  color: #666;
-}
+    .note-footer .actions button {
+      padding: 12px 18px;
+      font-size: 1em;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
 
-.note-footer .actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-}
+    .note-footer .actions button:hover {
+      background-color: #2563eb;
+    }
 
-.note-footer .actions button {
-  padding: 12px 18px;
-  font-size: 1em;
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
+    .note-footer .actions a {
+      padding: 8px 14px;
+      font-size: 0.9em;
+      background-color: #ef4444;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-block;
+    }
 
-.note-footer .actions button:hover {
-  background-color: #2563eb;
-}
+    .note-footer .actions a:hover {
+      background-color: #dc2626;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="container overlay">
+      
+      <!-- Topbar: welcome left, logout right -->
+      <div class="topbar">
+        <p>Welcome, <%= user ? user.userName : "Guest" %></p>
+        <a href="/logout">Logout</a>
+      </div>
 
-.note-footer .actions a {
-  padding: 10px 16px;
-  font-size: 0.9em;
-  background-color: #ef4444;
-  color: white;
-  border-radius: 6px;
-  text-decoration: none;
-}
+      <!-- Add note form -->
+      <form method="POST" action="/notes">
+        <textarea name="noteContent" placeholder="Write a note..." required></textarea>
+        <button type="submit">Add note</button>
+      </form>
 
-.note-footer .actions a:hover {
-  background-color: #dc2626;
-}
+      <!-- Notes list -->
+      <% if (notes && notes.length) { %>
+        <ul class="notes">
+          <% notes.forEach(function(note) { %>
+            <li>
+              <form method="POST" action="/notes/edit/<%= note._id %>">
+                <textarea name="noteContent"><%= note.noteContent %></textarea>
+                
+                <!-- Footer layout: time bottom-left, actions bottom-right -->
+                <div class="note-footer">
+                  <small>
+                    Last modified:
+                    <%= note.noteLastModified 
+                         ? new Date(note.noteLastModified).toLocaleString("en-HK", { timeZone: "Asia/Hong_Kong" }) 
+                         : "N/A" %>
+                  </small>
+                  <div class="actions">
+                    <button type="submit">Save</button>
+                    <a href="/notes/delete/<%= note._id %>">Delete</a>
+                  </div>
+                </div>
+              </form>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>No notes yet.</p>
+      <% } %>
+
+    </div>
+  </div>
+
+  <!-- Optional dynamic background override -->
+  <script>
+    fetch('/background')
+      .then(res => res.json())
+      .then(data => {
+        if (data.imageUrl && data.imageUrl !== '/images/default-bg.jpg') {
+          document.body.style.backgroundImage = `url('${data.imageUrl}')`;
+          document.body.style.backgroundSize = 'cover';
+          document.body.style.backgroundPosition = 'center';
+          document.body.style.backgroundRepeat = 'no-repeat';
+          document.body.style.backgroundAttachment = 'fixed';
+        }
+      })
+      .catch(err => console.error("Background fetch failed:", err));
+  </script>
+</body>
+</html>
