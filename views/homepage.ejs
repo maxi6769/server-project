@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="container overlay">
+      
+      <!-- Topbar -->
+      <div class="topbar">
+        <p>Welcome, <%= user ? user.userName : "Guest" %></p>
+        <a href="/logout">Logout</a>
+      </div>
+
+      <!-- Add note form -->
+      <form method="POST" action="/notes">
+        <textarea name="noteContent" placeholder="Write a note..." required></textarea>
+        <button type="submit">Add note</button>
+      </form>
+
+      <!-- Notes list -->
+      <% if (notes && notes.length) { %>
+        <ul class="notes">
+          <% notes.forEach(function(note) { %>
+            <li>
+              <form method="POST" action="/notes/edit/<%= note._id %>">
+                <textarea name="noteContent" onfocus="showActions(this)"><%= note.noteContent %></textarea>
+
+                <div class="note-footer">
+                  <div class="actions" style="display: none;">
+                    <button type="submit">Save</button>
+                    <a href="/notes/delete/<%= note._id %>">Delete</a>
+                  </div>
+                  <div class="timestamp">
+                    <small>
+                      Last modified:
+                      <%= note.noteLastModified 
+                           ? new Date(note.noteLastModified).toLocaleString("en-HK", { timeZone: "Asia/Hong_Kong" }) 
+                           : "N/A" %>
+                    </small>
+                  </div>
+                </div>
+              </form>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>No notes yet.</p>
+      <% } %>
+
+    </div>
+  </div>
+
+  <!-- Background override and button toggle -->
+  <script>
+    fetch('/background')
+      .then(res => res.json())
+      .then(data => {
+        if (data.imageUrl && data.imageUrl !== '/images/default-bg.jpg') {
+          document.body.style.backgroundImage = `url('${data.imageUrl}')`;
+        }
+      })
+      .catch(err => console.error("Background fetch failed:", err));
+
+    function showActions(textarea) {
+      const footer = textarea.nextElementSibling;
+      const actions = footer?.querySelector('.actions');
+      if (actions) actions.style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
